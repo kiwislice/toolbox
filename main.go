@@ -5,7 +5,9 @@ import (
 	"os"
 	"time"
 
-	copy "github.com/kiwislice/toolbox/copy"
+	"github.com/kiwislice/toolbox/clear"
+	"github.com/kiwislice/toolbox/copy"
+	"github.com/kiwislice/toolbox/remove"
 	"github.com/kiwislice/toolbox/tools"
 )
 
@@ -46,7 +48,19 @@ func main() {
 		} else {
 			copy.Execute(args)
 		}
-	case "test":
+	case "remove":
+		if needHelp {
+			remove.PrintDoc()
+		} else {
+			remove.Execute(args)
+		}
+	case "clear":
+		if needHelp {
+			clear.PrintDoc()
+		} else {
+			clear.Execute(args)
+		}
+	case "testLoadingText":
 		pb := tools.NewLoadingText()
 		pb.Start()
 		for i := 1 << 10; i > 0; i -= 1 {
@@ -55,6 +69,8 @@ func main() {
 			time.Sleep(1 * time.Millisecond)
 		}
 		pb.Finish()
+	case "showText":
+		fmt.Print(args)
 	default:
 		printMainDoc()
 	}

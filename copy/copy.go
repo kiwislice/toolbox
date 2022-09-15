@@ -108,7 +108,7 @@ func (cmd *CopyCmd) Run() {
 		}
 	}
 	if err := function(src, dest); err != nil {
-		color.Red(fmt.Sprint(err))
+		tools.Errorf("%s", err)
 	}
 }
 
