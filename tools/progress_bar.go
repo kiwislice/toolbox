@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 var (
@@ -19,7 +21,25 @@ var (
 		" [  =   ] ",
 		" [ =    ] ",
 	}
-	anime2 = `|/-\`
+	anime2         = `|/-\`
+	colorFunctions = []func(string, ...any) string{
+		color.BlackString,
+		color.BlueString,
+		color.CyanString,
+		color.GreenString,
+		color.HiBlackString,
+		color.HiBlueString,
+		color.HiCyanString,
+		color.HiGreenString,
+		color.HiMagentaString,
+		color.HiRedString,
+		color.HiWhiteString,
+		color.HiYellowString,
+		color.MagentaString,
+		color.RedString,
+		color.WhiteString,
+		color.YellowString,
+	}
 )
 
 type LoadingText interface {
@@ -29,7 +49,7 @@ type LoadingText interface {
 }
 
 func NewLoadingText() LoadingText {
-	return &animeLoadingText{animeTextProvider: anime2TextProvider}
+	return &animeLoadingText{animeTextProvider: anime1ColorfulTextProvider}
 }
 
 type simpleLoadingText struct {
@@ -62,6 +82,11 @@ func anime2TextProvider(index int) string {
 	return " " + anime2[i:i+1] + " "
 }
 
+func anime1ColorfulTextProvider(index int) string {
+	s := anime1[index%len(anime1)]
+	return colorFunctions[index%len(colorFunctions)](s)
+}
+
 type animeLoadingText struct {
 	text       string
 	maxLen     int
@@ -85,7 +110,7 @@ func (x *animeLoadingText) Start() {
 		for x.running {
 			fmt.Print("\r" + x.text)
 			x.animeIndex++
-			time.Sleep(20 * time.Millisecond)
+			time.Sleep(50 * time.Millisecond)
 		}
 	}()
 }

@@ -7,6 +7,7 @@ import (
 
 	"github.com/kiwislice/toolbox/clear"
 	"github.com/kiwislice/toolbox/copy"
+	"github.com/kiwislice/toolbox/randomstring"
 	"github.com/kiwislice/toolbox/remove"
 	"github.com/kiwislice/toolbox/tools"
 )
@@ -60,17 +61,24 @@ func main() {
 		} else {
 			clear.Execute(args)
 		}
+	case "randomString":
+		if needHelp {
+			randomstring.PrintDoc()
+		} else {
+			randomstring.Execute(args)
+		}
 	case "testLoadingText":
 		pb := tools.NewLoadingText()
 		pb.Start()
-		for i := 1 << 10; i > 0; i -= 1 {
-			s := fmt.Sprintf("aaaaaaaaa%dbb", i)
+		for i := 1 << 30; i > 1; i = int(float64(i) / 1.1) {
+			s := fmt.Sprintf("aaaaaaaaa %d bbbbb", i)
 			pb.SetText(s)
-			time.Sleep(1 * time.Millisecond)
+			time.Sleep(10 * time.Millisecond)
 		}
 		pb.Finish()
 	case "showText":
 		fmt.Print(args)
+
 	default:
 		printMainDoc()
 	}
