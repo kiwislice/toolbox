@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	tools "github.com/kiwislice/toolbox/tools"
+	"github.com/kiwislice/toolbox/core"
 )
 
 type RandomStringCmd struct {
@@ -23,7 +23,7 @@ type RandomStringArgs struct {
 	src     string
 	length  int
 	count   int
-	tools.GlobalConfig
+	core.GlobalConfig
 }
 
 func (x *RandomStringArgs) Parse(subArgs []string) (err error) {

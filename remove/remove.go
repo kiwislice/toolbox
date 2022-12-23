@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/kiwislice/toolbox/core"
 	tools "github.com/kiwislice/toolbox/tools"
 
 	"github.com/fatih/color"
@@ -22,7 +23,7 @@ func (x *RemoveCmd) PrintDoc() {
 type RemoveArgs struct {
 	flagSet *flag.FlagSet
 	target  string
-	tools.GlobalConfig
+	core.GlobalConfig
 }
 
 func (x *RemoveArgs) Parse(subArgs []string) (err error) {

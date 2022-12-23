@@ -1,0 +1,13 @@
+{
+    "ipL": "127.0.0.1",
+    "portL": "1433",
+    "accL": "sa",
+    "pwL": "<YourStrong@Passw0rd>",
+    "dbnameL": "CYBusNew1",
+    "ipR": "127.0.0.1",
+    "portR": "1433",
+    "accR": "sa",
+    "pwR": "<YourStrong@Passw0rd>",
+    "dbnameR": "CYBusOldOld1",
+    "tables": ["Cost_18","Cost_DriverSafe","ISP_Appeal"]
+}

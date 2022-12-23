@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"path/filepath"
 
+	core "github.com/kiwislice/toolbox/core"
 	tools "github.com/kiwislice/toolbox/tools"
 
 	"github.com/fatih/color"
@@ -23,7 +24,7 @@ type CopyArgs struct {
 	flagSet *flag.FlagSet
 	src     string
 	dest    string
-	tools.GlobalConfig
+	core.GlobalConfig
 }
 
 func (x *CopyArgs) Parse(subArgs []string) (err error) {
