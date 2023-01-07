@@ -105,7 +105,7 @@ func main() {
 		// defer dbR.Close()
 
 		// same := mssql.CompareTableData(dbL, dbR, "Cost_18")
-		// fmt.Printf("是否相同: %v\n", same)
+		// fmt.Printf("是否相同: %v\n", same
 
 	default:
 		printMainDoc()
