@@ -2,6 +2,7 @@ package tools
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"io/fs"
 	"os"
@@ -94,4 +95,20 @@ func CopyDir(src, dst string) error {
 	e = filepath.WalkDir(src, fn)
 	pb.Finish()
 	return e
+}
+
+// 新增或覆蓋文字檔
+func WriteTextFile(text, path string) (err error) {
+	f, err := os.Create(path)
+	if err != nil {
+		fmt.Println("os.Create失敗:", err.Error())
+		return
+	}
+	defer f.Close()
+
+	_, err = f.WriteString(text)
+	if err != nil {
+		fmt.Println("f.WriteString失敗:", err.Error())
+	}
+	return
 }

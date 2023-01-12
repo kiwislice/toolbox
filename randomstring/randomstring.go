@@ -6,8 +6,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/fatih/color"
 	"github.com/kiwislice/toolbox/core"
+	"github.com/kiwislice/toolbox/tools"
 )
 
 type RandomStringCmd struct {
@@ -32,9 +32,9 @@ func (x *RandomStringArgs) Parse(subArgs []string) (err error) {
 
 func (x *RandomStringArgs) PrintDoc() {
 	doc := `
-清空資料夾
+產生隨機字串
 
-toolbox.exe randomString <target>
+toolbox.exe randomString
 	`
 	fmt.Println(doc)
 	x.flagSet.PrintDefaults()
@@ -65,8 +65,8 @@ func newRandomStringCmd(subArgs []string) (*RandomStringCmd, error) {
 }
 
 func (cmd *RandomStringCmd) Run() {
-	color.Cyan("開始產生隨機字串")
-	defer color.Cyan("結束產生隨機字串")
+	tools.Debug("開始產生隨機字串")
+	defer tools.Debug("結束產生隨機字串")
 
 	for i := 0; i < cmd.args.count; i++ {
 		s := RandomString(cmd.args.src, cmd.args.length)

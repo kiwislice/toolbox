@@ -2,12 +2,6 @@ package tools
 
 import "github.com/fatih/color"
 
-var debugMode bool = false
-
-func DebugMode(enable bool) {
-	debugMode = enable
-}
-
 func Info(text string) {
 	color.White(text)
 }
@@ -33,13 +27,9 @@ func Errorf(format string, args ...any) {
 }
 
 func Debug(text string) {
-	if debugMode {
-		color.Green(text)
-	}
+	color.Green(text)
 }
 
 func Debugf(format string, args ...any) {
-	if debugMode {
-		color.Green(format, args...)
-	}
+	color.Green(format, args...)
 }

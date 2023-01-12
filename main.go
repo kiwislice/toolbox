@@ -20,9 +20,13 @@ func printMainDoc() {
 toolbox.exe <command> [<args>]
 
 以下為<command>清單：
-	help	顯示使用說明
-	copy	複製檔案或資料夾
-	remove	刪除檔案或資料夾
+	help			顯示使用說明
+	copy			複製檔案或資料夾
+	remove			刪除檔案或資料夾
+	randomString	產生隨機字串
+	mssqlCompareTableData	比較MSSQL的2張資料表資料內容是否相同
+	mssqlGetDatabaseSchema	取得MSSQL指定資料庫的Schema資料
+
 
 'toolbox.exe help <command>'可以看到該command的使用說明
 	`
@@ -90,6 +94,12 @@ func main() {
 			mssql.CompareTableData.PrintDoc()
 		} else {
 			mssql.CompareTableData.Execute(args)
+		}
+	case "mssqlGetDatabaseSchema":
+		if needHelp {
+			mssql.GetDatabaseSchemaCmd.PrintDoc()
+		} else {
+			mssql.GetDatabaseSchemaCmd.Execute(args)
 		}
 
 		// dbL, err := mssql.NewDb("127.0.0.1", "1433", "sa", "<YourStrong@Passw0rd>", "CYBusNew1")

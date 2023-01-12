@@ -1,7 +1,6 @@
 package mssql
 
 import (
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -30,7 +29,7 @@ func (x *compareTableDataCommandObject) Execute(subArgs []string) {
 	if err != nil {
 		args.PrintDoc()
 	} else {
-		run(args)
+		runCompareTableData(args)
 	}
 }
 
@@ -88,7 +87,7 @@ toolbox.exe mssqlCompareTableData <設定檔路徑>
 	fmt.Println("")
 }
 
-func run(args *compareTableDataArgs) {
+func runCompareTableData(args *compareTableDataArgs) {
 	settingfile := args.settingfile
 	color.Yellow(settingfile)
 
@@ -137,11 +136,11 @@ type settingArgs struct {
 	Tables  []string `json:"tables"`
 }
 
-func newDbL(args *settingArgs) (db *sql.DB, err error) {
+func newDbL(args *settingArgs) (db *CustomDB, err error) {
 	return NewDb(args.IpL, args.PortL, args.AccL, args.PwL, args.DbnameL)
 }
 
-func newDbR(args *settingArgs) (db *sql.DB, err error) {
+func newDbR(args *settingArgs) (db *CustomDB, err error) {
 	return NewDb(args.IpR, args.PortR, args.AccR, args.PwR, args.DbnameR)
 }
 
@@ -159,7 +158,7 @@ func readSettingFile(settingfile string) (setting settingArgs, err error) {
 }
 
 /// true=都相同
-func compareTableData(dbL, dbR *sql.DB, tablename string) (same bool) {
+func compareTableData(dbL, dbR *CustomDB, tablename string) (same bool) {
 	listL, err := SelectAll(dbL, tablename)
 	if err != nil {
 		tools.Error("SelectAll fail: " + err.Error())
