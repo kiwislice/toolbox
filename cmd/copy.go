@@ -5,7 +5,6 @@ import (
 	"path/filepath"
 
 	"github.com/fatih/color"
-	core "github.com/kiwislice/toolbox/core"
 	tools "github.com/kiwislice/toolbox/tools"
 	"github.com/spf13/cobra"
 )
@@ -59,16 +58,6 @@ var copyCmd = &cobra.Command{
 			tools.Errorf("%s", err)
 		}
 	},
-}
-
-type CopyCmd struct {
-	args *CopyArgs
-}
-
-type CopyArgs struct {
-	src  string
-	dest string
-	core.GlobalConfig
 }
 
 func f2f(src, dest string) error {
