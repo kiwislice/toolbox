@@ -1,3 +1,4 @@
+// 該檔案為 fileTools 的單元測試
 package tools
 
 import (
@@ -9,39 +10,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// func Test_ShowPath(t *testing.T) {
-// 	fmt.Println("Test_ShowPath start.")
-// 	assert := assert.New(t)
-
-// 	os.Remove()
-
-// 	f, err := os.CreateTemp("tempfile")
-// 	if err != nil {
-// 		assert.Fail(fmt.Sprint(err))
-// 		return
-// 	}
-// 	defer f.Close()
-
-// 	wd, err := os.Getwd()
-// 	if err != nil {
-// 		assert.Fail(fmt.Sprint(err))
-// 		return
-// 	}
-
-// 	fmt.Println("test finished." + wd)
-// 	assert.FailNow("Test_ShowPath")
-// }
-
+// Test_IsExist 測試 IsExist 函式
 func Test_IsExist(t *testing.T) {
 	fmt.Println("test start.")
 	assert := assert.New(t)
 
+	// 取得目前的工作目錄
 	workDir, err := os.Getwd()
 	if err != nil {
 		assert.Fail(fmt.Sprint(err))
 		return
 	}
 
+	// 測試函式，用來驗證 IsExist 的結果
 	test := func(path string) {
 		expected, fileInfo := IsExist(path)
 
@@ -57,9 +38,11 @@ func Test_IsExist(t *testing.T) {
 		}
 	}
 
+	// 測試一個不存在的檔案
 	path := filepath.Join(workDir, "testfile")
 	test(path)
 
+	// 建立一個檔案，再測試一次
 	f, err := os.Create(path)
 	if err != nil {
 		assert.Fail(fmt.Sprint(err))
@@ -70,5 +53,6 @@ func Test_IsExist(t *testing.T) {
 	test(path)
 
 	fmt.Println("test finished.")
+	// 這個測試案例會刻意失敗，這是已知的狀況
 	assert.FailNow("a")
 }

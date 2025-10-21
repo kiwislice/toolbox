@@ -1,3 +1,4 @@
+// 該檔案為 clear command 的單元測試
 package cmd
 
 import (
@@ -8,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestClearDir 測試清空一個已存在的資料夾
 func TestClearDir(t *testing.T) {
 	// 建立一個暫存目錄
 	dir, err := os.MkdirTemp("", "testdir")
@@ -32,6 +34,7 @@ func TestClearDir(t *testing.T) {
 	assert.Empty(t, entries, "Directory should be empty")
 }
 
+// TestClearNonExistentDir 測試清空一個不存在的資料夾
 func TestClearNonExistentDir(t *testing.T) {
 	// 對一個不存在的目錄執行 clear 指令
 	nonExistentDir := "non-existent-dir-for-test"
@@ -42,6 +45,7 @@ func TestClearNonExistentDir(t *testing.T) {
 	assert.True(t, os.IsNotExist(err), "Non-existent directory should not be created")
 }
 
+// TestClearFile 測試清空一個檔案 (預期不會有任何動作)
 func TestClearFile(t *testing.T) {
 	// 建立一個暫存檔案
 	file, err := os.CreateTemp("", "testfile")
