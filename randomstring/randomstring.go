@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"math/rand"
+	"os"
 	"time"
 
 	"github.com/kiwislice/toolbox/core"
@@ -44,6 +45,7 @@ toolbox.exe randomString
 func newRandomStringArgs(subArgs []string) *RandomStringArgs {
 	args := new(RandomStringArgs)
 	args.flagSet = flag.NewFlagSet("randomString", flag.ExitOnError)
+	args.flagSet.SetOutput(os.Stdout)
 	args.GlobalConfig.Bind(args.flagSet)
 	args.flagSet.StringVar(&args.src, "src", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz", "字元來源")
 	args.flagSet.IntVar(&args.length, "length", 8, "隨機字串長度")
