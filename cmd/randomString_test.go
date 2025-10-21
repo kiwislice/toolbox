@@ -1,6 +1,7 @@
-package randomstring
+package cmd
 
 import (
+	"bytes"
 	"io"
 	"os"
 	"strings"
@@ -12,14 +13,14 @@ import (
 func TestRandomStringLength(t *testing.T) {
 	src := "abc"
 	length := 10
-	s := RandomString(src, length)
+	s := randomString(src, length)
 	assert.Equal(t, length, len(s), "Generated string should have the correct length")
 }
 
 func TestRandomStringCharset(t *testing.T) {
 	src := "abc"
 	length := 10
-	s := RandomString(src, length)
+	s := randomString(src, length)
 	for _, char := range s {
 		assert.True(t, strings.ContainsRune(src, char), "Generated string should only contain characters from the source")
 	}
@@ -28,8 +29,8 @@ func TestRandomStringCharset(t *testing.T) {
 func TestRandomStringUniqueness(t *testing.T) {
 	src := "abcdefghijklmnopqrstuvwxyz"
 	length := 10
-	s1 := RandomString(src, length)
-	s2 := RandomString(src, length)
+	s1 := randomString(src, length)
+	s2 := randomString(src, length)
 	assert.NotEqual(t, s1, s2, "Consecutive random strings should be different")
 }
 
@@ -48,25 +49,30 @@ func captureOutput(f func()) string {
 	return string(out)
 }
 
-func TestExecute(t *testing.T) {
-	output := captureOutput(func() {
-		Execute([]string{"-length", "12", "-count", "3"})
-	})
+func TestRandomStringExecute(t *testing.T) {
+	// Redirect stdout to a buffer
+	old := os.Stdout
+	r, w, _ := os.Pipe()
+	os.Stdout = w
 
+	// Set flags and run the command
+	randomStringLength = 12
+	randomStringCount = 3
+	randomStringCmd.Run(nil, nil)
+
+	// Restore stdout
+	w.Close()
+	os.Stdout = old
+
+	// Read the output from the buffer
+	var buf bytes.Buffer
+	io.Copy(&buf, r)
+	output := buf.String()
+
+	// Perform assertions
 	lines := strings.Split(strings.TrimSpace(output), "\n")
 	assert.Len(t, lines, 3, "Execute should generate the correct number of strings")
 	for _, line := range lines {
-		assert.Len(t, line, 12, "Each generated string should have the correct length")
+		assert.Equal(t, 12, len(line), "Each generated string should have the correct length")
 	}
-}
-
-func TestPrintDoc(t *testing.T) {
-	output := captureOutput(func() {
-		PrintDoc()
-	})
-
-	assert.Contains(t, output, "產生隨機字串", "PrintDoc should contain the command description")
-	assert.Contains(t, output, "-src", "PrintDoc should contain the src flag")
-	assert.Contains(t, output, "-length", "PrintDoc should contain the length flag")
-	assert.Contains(t, output, "-count", "PrintDoc should contain the count flag")
 }

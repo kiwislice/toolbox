@@ -1,4 +1,4 @@
-package clear
+package cmd
 
 import (
 	"os"
@@ -20,9 +20,7 @@ func TestClearDir(t *testing.T) {
 	assert.NoError(t, err)
 
 	// 執行 clear 指令
-	cmd, err := newClearCmd([]string{dir})
-	assert.NoError(t, err)
-	cmd.Run()
+	clearCmd.Run(nil, []string{dir})
 
 	// 檢查目錄是否存在
 	_, err = os.Stat(dir)
@@ -37,12 +35,10 @@ func TestClearDir(t *testing.T) {
 func TestClearNonExistentDir(t *testing.T) {
 	// 對一個不存在的目錄執行 clear 指令
 	nonExistentDir := "non-existent-dir-for-test"
-	cmd, err := newClearCmd([]string{nonExistentDir})
-	assert.NoError(t, err)
-	cmd.Run()
+	clearCmd.Run(nil, []string{nonExistentDir})
 
 	// 檢查該目錄是否仍然不存在
-	_, err = os.Stat(nonExistentDir)
+	_, err := os.Stat(nonExistentDir)
 	assert.True(t, os.IsNotExist(err), "Non-existent directory should not be created")
 }
 
@@ -54,9 +50,7 @@ func TestClearFile(t *testing.T) {
 	file.Close()
 
 	// 對檔案執行 clear 指令
-	cmd, err := newClearCmd([]string{file.Name()})
-	assert.NoError(t, err)
-	cmd.Run()
+	clearCmd.Run(nil, []string{file.Name()})
 
 	// 檢查檔案是否仍然存在
 	_, err = os.Stat(file.Name())
